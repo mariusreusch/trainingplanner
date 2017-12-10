@@ -1,5 +1,6 @@
 package ch.mare.trainingplanner;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,4 +10,6 @@ public class TrainingPlannerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrainingPlannerApplication.class, args);
 	}
+
+
 }
