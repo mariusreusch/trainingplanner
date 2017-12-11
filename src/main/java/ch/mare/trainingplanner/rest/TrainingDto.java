@@ -54,4 +54,15 @@ public class TrainingDto {
     public Training toEntity() {
         return new Training(title, description, cost, start, end);
     }
+
+    @Override
+    public String toString() {
+        return "TrainingDto{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", cost=" + cost +
+                ", start=" + start +
+                ", end=" + end +
+                '}';
+    }
 }
