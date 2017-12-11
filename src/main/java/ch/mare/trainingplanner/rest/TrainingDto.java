@@ -14,7 +14,7 @@ public class TrainingDto {
     private ZonedDateTime start;
     private ZonedDateTime end;
 
-    private TrainingDto(String title, String description, Money cost, ZonedDateTime start, ZonedDateTime end) {
+    public TrainingDto(String title, String description, Money cost, ZonedDateTime start, ZonedDateTime end) {
         this.title = title;
         this.description = description;
         this.cost = cost;
