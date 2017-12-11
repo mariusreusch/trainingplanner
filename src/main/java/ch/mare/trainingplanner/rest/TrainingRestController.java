@@ -20,7 +20,7 @@ public class TrainingRestController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void createNewTraining(TrainingDto trainingDto) {
+    public void createNewTraining(@RequestBody TrainingDto trainingDto) {
         System.out.println(trainingDto);
 
     }
