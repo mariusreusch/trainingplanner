@@ -18,6 +18,7 @@ import java.util.Arrays;
 import static java.time.ZoneId.systemDefault;
 import static java.time.ZonedDateTime.of;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -69,6 +70,7 @@ public class TrainingRestControllerTest {
     @Test
     public void createNewTraining_validInput_statusIsCreated() throws Exception {
         ResultActions result = mvc.perform(post("/trainings")
+                .contentType(APPLICATION_JSON)
                 .content("{\n" +
                         "  \"title\": \"A new training\",\n" +
                         "  \"description\": \"A gorgeous training.\",\n" +
