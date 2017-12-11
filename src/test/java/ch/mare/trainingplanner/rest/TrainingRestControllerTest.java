@@ -14,9 +14,11 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static java.time.ZoneId.systemDefault;
 import static java.time.ZonedDateTime.of;
+import static java.util.Collections.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,7 +47,7 @@ public class TrainingRestControllerTest {
     public void getAllTrainings_validRequest_statusIsOkAndContentMatches() throws Exception {
         ZonedDateTime fromJanuaryTheFirst = of(2017, 1, 1, 0, 0, 0, 0, systemDefault());
         ZonedDateTime tillJanuaryTheSecond = of(2017, 1, 3, 0, 0, 0, 0, systemDefault());
-        given(trainingService.findAllTrainings()).willReturn(Arrays.asList(
+        given(trainingService.findAllTrainings()).willReturn(singletonList(
                 new TrainingDto("Test training", "A fantastic workshop", Money.of(100, "CHF"),
                         fromJanuaryTheFirst, tillJanuaryTheSecond)));
 
