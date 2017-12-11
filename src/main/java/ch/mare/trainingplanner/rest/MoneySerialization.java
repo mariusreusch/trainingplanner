@@ -2,6 +2,7 @@ package ch.mare.trainingplanner.rest;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -29,8 +30,9 @@ public class MoneySerialization {
     public static class JsonDeserialization extends JsonDeserializer<Money> {
         @Override
         public Money deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-            NumericNode amount = (NumericNode) p.getCodec().readTree(p).get("amount");
-            TextNode currency = (TextNode) p.getCodec().readTree(p).get("currency");
+            TreeNode treeNode = p.getCodec().readTree(p);
+            NumericNode amount = (NumericNode) treeNode.get("amount");
+            TextNode currency = (TextNode) treeNode.get("currency");
             return Money.of(amount.asDouble(), currency.asText());
         }
     }
