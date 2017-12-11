@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.ZonedDateTime;
 
+import static java.util.Objects.requireNonNull;
+
 @Entity
 public class Training {
 
@@ -21,11 +23,11 @@ public class Training {
     private ZonedDateTime end;
 
     public Training(String title, String description, Money cost, ZonedDateTime start, ZonedDateTime end) {
-        this.title = title;
-        this.description = description;
-        this.cost = cost;
-        this.start = start;
-        this.end = end;
+        this.title = requireNonNull(title);
+        this.description = requireNonNull(description);
+        this.cost = requireNonNull(cost);
+        this.start = requireNonNull(start);
+        this.end = requireNonNull(end);
     }
 
     @OnlyForFramework
