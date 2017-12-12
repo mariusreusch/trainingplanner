@@ -1,4 +1,4 @@
-package ch.mare.trainingplanner.rest;
+package ch.mare.trainingplanner.rest.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;

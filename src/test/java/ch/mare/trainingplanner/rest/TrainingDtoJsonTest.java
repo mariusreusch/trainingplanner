@@ -24,14 +24,14 @@ public class TrainingDtoJsonTest {
     private JacksonTester<TrainingDto> json;
 
     @Test
-    public void serializeTrainingDto_validDto_correctlySerialized() throws IOException {
+    public void serializeTrainingDto_validDto_serializedJson() throws IOException {
         ZonedDateTime fromJanuaryTheFirst = of(2017, 1, 1, 0, 0, 0, 0, systemDefault());
         ZonedDateTime tillJanuaryTheThird = of(2017, 1, 3, 0, 0, 0, 0, systemDefault());
         TrainingDto trainingDto = new TrainingDto("A marvelous title", "Superb course", Money.of(300, "CHF"), fromJanuaryTheFirst, tillJanuaryTheThird);
 
-        JsonContent<TrainingDto> traingDtoAsJson = json.write(trainingDto);
+        JsonContent<TrainingDto> trainingDtoAsJson = json.write(trainingDto);
 
-        assertThat(traingDtoAsJson).isStrictlyEqualToJson("{\n" +
+        assertThat(trainingDtoAsJson).isStrictlyEqualToJson("{\n" +
                 "  \"title\": \"A marvelous title\",\n" +
                 "  \"description\": \"Superb course\",\n" +
                 "  \"cost\": {\n" +
@@ -41,5 +41,25 @@ public class TrainingDtoJsonTest {
                 "  \"start\": \"2017-01-01T00:00:00+01:00\",\n" +
                 "  \"end\": \"2017-01-03T00:00:00+01:00\"\n" +
                 "}");
+    }
+
+    @Test
+    public void deserializeTrainingDto_validJson_trainingDtoObject() throws Exception {
+        ZonedDateTime fromJanuaryTheFirst = of(2017, 1, 1, 0, 0, 0, 0, systemDefault());
+        ZonedDateTime tillJanuaryTheThird = of(2017, 1, 3, 0, 0, 0, 0, systemDefault());
+        TrainingDto expectedTrainingDto = new TrainingDto("A marvelous title", "Superb course", Money.of(300, "CHF"), fromJanuaryTheFirst, tillJanuaryTheThird);
+
+        String json = "{\n" +
+                "  \"title\": \"A marvelous title\",\n" +
+                "  \"description\": \"Superb course\",\n" +
+                "  \"cost\": {\n" +
+                "    \"amount\": 300.0,\n" +
+                "    \"currency\": \"CHF\"\n" +
+                "  },\n" +
+                "  \"start\": \"2017-01-01T00:00:00+01:00\",\n" +
+                "  \"end\": \"2017-01-03T00:00:00+01:00\"\n" +
+                "}";
+
+        assertThat(this.json.parse(json)).isEqualTo(expectedTrainingDto);
     }
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javamoney.moneta.Money;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 public class TrainingDto {
 
@@ -66,5 +67,23 @@ public class TrainingDto {
                 ", start=" + start +
                 ", end=" + end +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TrainingDto that = (TrainingDto) o;
+        return Objects.equals(title, that.title) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(cost, that.cost) &&
+                Objects.equals(start, that.start) &&
+                Objects.equals(end, that.end);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(title, description, cost, start, end);
     }
 }
