@@ -1,29 +1,33 @@
 package ch.mare.trainingplanner.rest;
 
-import ch.mare.trainingplanner.common.OnlyForFramework;
 import ch.mare.trainingplanner.domain.Training;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javamoney.moneta.Money;
 
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 public class TrainingDto {
 
+    @NotNull
     private String title;
     private String description;
     private Money cost;
     private ZonedDateTime start;
     private ZonedDateTime end;
 
-    public TrainingDto(String title, String description, Money cost, ZonedDateTime start, ZonedDateTime end) {
+    @JsonCreator
+    public TrainingDto(@JsonProperty(value = "title", required = true) String title,
+                       @JsonProperty(value = "description", required = true) String description,
+                       @JsonProperty(value = "cost", required = true)  Money cost,
+                       @JsonProperty(value = "start", required = true) ZonedDateTime start,
+                       @JsonProperty(value = "end", required = true) ZonedDateTime end) {
         this.title = title;
         this.description = description;
         this.cost = cost;
         this.start = start;
         this.end = end;
-    }
-
-    @OnlyForFramework
-    private TrainingDto() {
     }
 
     public String getTitle() {
