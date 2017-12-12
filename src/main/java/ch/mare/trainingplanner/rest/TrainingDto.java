@@ -11,11 +11,11 @@ import java.util.Objects;
 
 public class TrainingDto {
 
-    private String title;
-    private String description;
-    private Money cost;
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private final String title;
+    private final String description;
+    private final Money cost;
+    private final ZonedDateTime start;
+    private final ZonedDateTime end;
 
     @JsonCreator
     public TrainingDto(@JsonProperty(value = "title", required = true) String title,

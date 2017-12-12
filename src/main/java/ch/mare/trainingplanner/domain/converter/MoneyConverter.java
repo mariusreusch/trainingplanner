@@ -1,4 +1,4 @@
-package ch.mare.trainingplanner.domain.jpa;
+package ch.mare.trainingplanner.domain.converter;
 
 import org.javamoney.moneta.Money;
 

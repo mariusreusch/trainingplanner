@@ -6,8 +6,8 @@ import static java.util.Objects.requireNonNull;
 
 public class TrainingDate {
 
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private final ZonedDateTime start;
+    private final ZonedDateTime end;
 
     private TrainingDate(ZonedDateTime start, ZonedDateTime end) {
         this.start = requireNonNull(start);
