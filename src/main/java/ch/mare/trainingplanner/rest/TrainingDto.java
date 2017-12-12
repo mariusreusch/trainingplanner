@@ -1,6 +1,7 @@
 package ch.mare.trainingplanner.rest;
 
 import ch.mare.trainingplanner.domain.Training;
+import ch.mare.trainingplanner.domain.TrainingDate;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javamoney.moneta.Money;
@@ -55,7 +56,7 @@ public class TrainingDto {
     }
 
     public Training toEntity() {
-        return new Training(title, description, cost, start, end);
+        return new Training(title, description, cost, TrainingDate.from(start).until(end));
     }
 
     @Override

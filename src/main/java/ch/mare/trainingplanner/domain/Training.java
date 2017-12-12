@@ -22,12 +22,12 @@ public class Training {
     private ZonedDateTime start;
     private ZonedDateTime end;
 
-    public Training(String title, String description, Money cost, ZonedDateTime start, ZonedDateTime end) {
+    public Training(String title, String description, Money cost, TrainingDate trainingDate) {
         this.title = requireNonNull(title);
         this.description = requireNonNull(description);
         this.cost = requireNonNull(cost);
-        this.start = requireNonNull(start);
-        this.end = requireNonNull(end);
+        this.start = trainingDate.getStart();
+        this.end = trainingDate.getEnd();
     }
 
     @OnlyForFramework
