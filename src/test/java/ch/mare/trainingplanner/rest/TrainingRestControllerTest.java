@@ -21,6 +21,7 @@ import static java.time.ZonedDateTime.of;
 import static java.util.Collections.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,21 +40,21 @@ public class TrainingRestControllerTest {
     @Test
     public void getAllTrainings_validRequest_statusIsOk() throws Exception {
         mvc.perform(get("/trainings"))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAllTrainings_validRequest_statusIsOkAndContentMatches() throws Exception {
         ZonedDateTime fromJanuaryTheFirst = of(2017, 1, 1, 0, 0, 0, 0, systemDefault());
-        ZonedDateTime tillJanuaryTheSecond = of(2017, 1, 3, 0, 0, 0, 0, systemDefault());
+        ZonedDateTime tillJanuaryTheThird = of(2017, 1, 3, 0, 0, 0, 0, systemDefault());
         given(trainingService.findAllTrainings()).willReturn(singletonList(
                 new TrainingDto("Test training", "A fantastic workshop", Money.of(100, "CHF"),
-                        fromJanuaryTheFirst, tillJanuaryTheSecond)));
+                        fromJanuaryTheFirst, tillJanuaryTheThird)));
 
         ResultActions result = mvc.perform(get("/trainings"));
 
-        result.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+        result.andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(content().json("[\n" +
                         "  {\n" +
                         "    \"title\": \"Test training\",\n" +
