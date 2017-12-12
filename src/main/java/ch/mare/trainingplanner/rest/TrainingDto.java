@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.javamoney.moneta.Money;
 
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 public class TrainingDto {
 
-    @NotNull
     private String title;
     private String description;
     private Money cost;
