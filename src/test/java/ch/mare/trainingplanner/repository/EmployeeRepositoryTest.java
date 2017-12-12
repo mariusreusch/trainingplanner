@@ -1,7 +1,6 @@
 package ch.mare.trainingplanner.repository;
 
 import ch.mare.trainingplanner.domain.Employee;
-import org.assertj.core.api.Assertions;
 import org.javamoney.moneta.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
