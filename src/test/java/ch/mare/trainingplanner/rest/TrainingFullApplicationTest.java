@@ -3,49 +3,51 @@ package ch.mare.trainingplanner.rest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.List;
+
+import static java.time.ZonedDateTime.now;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.javamoney.moneta.Money.of;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@AutoConfigureMockMvc
 public class TrainingFullApplicationTest {
 
+    @LocalServerPort
+    private int serverPort;
+
     @Autowired
-    private MockMvc mvc;
+    private TestRestTemplate testRestTemplate;
 
     @Test
-    public void getAllTrainings_validRequest_statusIsOk() throws Exception {
-        mvc.perform(get("/trainings"))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
-    }
+    public void getAllTrainings_validRequest_statusIsOk() {
+        String urlForAllTrainings = "http://localhost:" + serverPort + "/trainings";
 
+        ResponseEntity<List> response = testRestTemplate.getForEntity(urlForAllTrainings, List.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(OK);
+        assertThat(response.getBody()).isNotEmpty();
+    }
 
     @Test
     public void createNewTraining_validInput_statusIsCreated() throws Exception {
-        ResultActions result = mvc.perform(post("/trainings")
-                .content("{\n" +
-                        "  \"title\": \"A new training\",\n" +
-                        "  \"description\": \"A gorgeous training.\",\n" +
-                        "  \"cost\": {\n" +
-                        "    \"amount\": 400.0,\n" +
-                        "    \"currency\": \"CHF\"\n" +
-                        "  },\n" +
-                        "  \"start\": \"2017-02-01T00:00:00+01:00\",\n" +
-                        "  \"end\": \"2017-02-03T00:00:00+01:00\"\n" +
-                        "}"));
+        String baseUrlForTrainingRestService = "http://localhost:" + serverPort + "/trainings";
+        String title = "An extraordinary workshop";
+        TrainingDto trainingToCreate = new TrainingDto(title, "Java workshop", of(450, "CHF"), now().minusDays(10), now().plusDays(20));
 
-        result.andExpect(status().isCreated());
+        ResponseEntity<Void> response = testRestTemplate.postForEntity(baseUrlForTrainingRestService, trainingToCreate, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(CREATED);
+        ResponseEntity<TrainingDto> createdTrainingDto = testRestTemplate.getForEntity(baseUrlForTrainingRestService.concat("/?title=" + title), TrainingDto.class);
+        assertThat(createdTrainingDto.getBody().getTitle()).isEqualTo(title);
     }
 }

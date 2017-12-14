@@ -22,4 +22,12 @@ public class TrainingService {
                 .map(TrainingDto::from)
                 .collect(toList());
     }
+
+    public void create(TrainingDto trainingDto) {
+        this.trainingRepository.save(trainingDto.toEntity());
+    }
+
+    public TrainingDto findByTitle(String title) {
+        return this.trainingRepository.findTrainingByTitle(title);
+    }
 }

@@ -20,7 +20,7 @@ public class TrainingRestController {
     @PostMapping
     @ResponseStatus(CREATED)
     public void createNewTraining(@RequestBody TrainingDto trainingDto) {
-        System.out.println(trainingDto);
+        trainingService.create(trainingDto);
 
     }
 
@@ -29,9 +29,8 @@ public class TrainingRestController {
         return trainingService.findAllTrainings();
     }
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "hello";
+    @GetMapping("/")
+    public TrainingDto getTrainingByTitle(@RequestParam(name = "title") String title) {
+        return trainingService.findByTitle(title);
     }
-
 }
